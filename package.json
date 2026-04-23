@@ -1,0 +1,25 @@
+{
+  "name": "secure-messenger-server",
+  "version": "1.0.0",
+  "description": "Secure Messenger — thin relay server",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "NODE_ENV=development node src/index.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8",
+    "dotenv": "^16.4",
+    "express": "^4.18",
+    "express-rate-limit": "^7.2",
+    "jsonwebtoken": "^9.0",
+    "morgan": "^1.10",
+    "pg": "^8.11",
+    "uuid": "^9.0",
+    "ws": "^8.16"
+  }
+}
