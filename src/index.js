@@ -14,6 +14,8 @@ const { runMigrations } = require('./db/migrate');
 const { authLimiter }   = require('./middleware/rateLimit');
 const authRoutes        = require('./routes/auth');
 const usersRoutes       = require('./routes/users');
+const groupsRoutes      = require('./routes/groups');
+const { createWsServer } = require('./ws/wsServer');
 
 async function start() {
   log.info('Starting Secure Messenger Server v1.0.0');
@@ -42,8 +44,9 @@ async function start() {
   });
 
   // Routes
-  app.use('/api/auth',  authLimiter, authRoutes);
-  app.use('/api/users', usersRoutes);
+  app.use('/api/auth',   authLimiter, authRoutes);
+  app.use('/api/users',  usersRoutes);
+  app.use('/api/groups', groupsRoutes);
 
   // Global error handler
   app.use((err, req, res, next) => {
@@ -56,6 +59,8 @@ async function start() {
   const port = parseInt(config.PORT, 10);
   server.listen(port, () => {
     log.info(`HTTP server listening on port ${port}`);
+    createWsServer(server);
+    log.info('WebSocket server attached');
   });
 
   process.on('unhandledRejection', (reason) => {
